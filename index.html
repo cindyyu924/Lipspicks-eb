@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>唇唇欲動 LipsPicks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+   <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            transition: background-color 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            padding-left: 20px;
+        }
+        
+        #home { 
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1631730359585-38a4935cbec4?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            
+         } 
+        
+         /* #home {  
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url('https://images.unsplash.com/photo-1631730359585-38a4935cbec4?q=80&w=2070&auto=format&fit=crop');
+            background-color: rgba(0, 0, 0, 0.5); 
+        }  */
+        
+        header .container {
+            position: relative;
+            z-index: 1;
+           
+        }
+
+        
+        h1,h2,h3 {
+            font-weight: 300;
+            color:white;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+        }
+        
+        .btn-primary {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+        
+        .btn-primary:hover {
+            background-color: #ff3333;
+            border-color: #ff3333;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            
+        }
+        
+        .brand-container {
+            text-align: center;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .brand-logo {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: -100px;
+            /* 增加底部間距，為第二張圖片留出空間 */
+        }
+        
+        .brand-logo-subtitle {
+            max-width: 80%;
+            /* 可以調整，使 LipsPicks 圖片稍小一些 */
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#home">LipsPicks</a>
+            <!-- <div class="navbar-logo"> -->
+                <!-- <img src="images/LipsPicks.png" alt="LipsPicks Logo" class="navbar-logo-img"> -->
+            <!-- </div> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">簡介</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#photo-tips">拍照需知</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#test-steps">測試步驟</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#our-story">Story</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#our-team">Team</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="home">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center text-white">
+                    <div class="brand-container">
+                        <img src="images/唇唇慾動.png" alt="唇唇慾動 LipsPicks" class="brand-logo">
+                        <img src="images/LipsPicks.png" alt="LipsPicks" class="brand-logo-subtitle">
+                    </div>
+                    <div id="app">
+                        <h1>LipsPicks - 個人色彩分析</h1>
+                        <button id="startAnalysisBtn">開始個人色彩分析</button>
+                    
+                        <div id="analysisModal" style="display:none;">
+                            <h2>開始個人色彩分析</h2>
+                            
+                            <div id="initialOptions">
+                                <p>請選擇上傳照片或使用拍照：</p>
+                                <input type="file" id="fileInput" accept="image/*">
+                                <button id="cameraBtn">拍照</button>
+                            </div>
+                    
+                            <div id="cameraView" style="display:none;">
+                                <video id="video" width="400" height="300" autoplay></video>
+                                <button id="captureBtn">拍攝</button>
+                            </div>
+                    
+                            <div id="previewView" style="display:none;">
+                                <img id="preview" style="max-width: 400px;">
+                                <div class="button-container">
+                                    <button id="retakeBtn">重新拍攝</button>
+                                    <button id="analyzeBtn">開始分析</button>
+                                </div>
+                            </div>
+                    
+                            <div id="analysisResult" style="display:none;">
+                                <h3>分析結果：</h3>
+                                <p id="resultText"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button id="startBtn" class="btn btn-primary btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#testModal">開始檢測</button> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="section py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 text-black">簡介</h2>
+            <p>不知道自己適合什麼顏色的口紅？是否曾買到不適合自己的口紅？挑選適合自己的唇色，不僅能顯白，還能降低視覺年齡！我們的網站可以幫助你解決這些問題。只需上傳一張照片，透過簡單的AI色彩檢測，我們將幫助你挑選出最適合的口紅色號。</p>
+        </div>
+    </section>
+    
+    <section id="photo-tips" class="section py-5" style="background-color: #FCFCFC;">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: black;">拍照需知</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card border-0" style="background-color: white;">
+                        <div class="card-body">
+                            <ul>
+                                <li>請在自然光或日光燈等光線明亮的環境下拍攝正面照。（不要使用閃光燈）。</li>
+                                <li>選擇一個簡單、單色的背景，這樣可以減少背景色對膚色偵測的干擾。</li>
+                                <li>由於光照條件和拍攝設備的不同，測試結果可能會有一些差異。</li>
+                                <li>啟動攝像頭需要訪問權限。請在瀏覽器上獲取攝像頭的訪問權限後，進行拍照。</li>
+                                <li>請在素顏的狀態下拍照。如不方便卸妝，也可在淡妝的狀態下拍照，但請確保膚色部位無妝。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="test-steps" class="section py-5" style="background-color: #FCFCFC;">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: black;">測試步驟</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card border-0" style="background-color: white;">
+                        <div class="card-body">
+                            <div id="demo-image" class="mb-4">
+                                <!-- 這裡可以放示意圖 -->
+                            </div>
+                            <ol>
+                                <li>點擊"開始檢測"按鈕。</li>
+                                <li>選擇上傳照片或使用拍照功能。</li>
+                                <li>確認照片後，點擊"開始分析"。</li>
+                                <li>等待系統分析結果。</li>
+                                <div id="lipstickOptions"></div>
+                                <canvas id="lipstickCanvas"></canvas>
+                                <img id="originalImage" style="display: none;" />
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 新增我們的故事部分 -->
+<section id="our-story" class="section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color: black;">我們的故事</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card border-0" style="background-color: white;">
+                    <div class="card-body">
+                        <p>我們是來自致理科大的五位充滿熱情和創意的大學生，我們注意到很多人在選擇適合自己的口紅色號時遇到困難，於是我們決定運用AI技術來解決這個問題。</p>
+                        <p>成立於 2024 年，我們的使命是幫助每個人找到最適合自己的唇色，提升自信，綻放魅力。我們相信，每個人都應該擁有屬於自己的完美唇色。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 修改我们的团队部分 -->
+<section id="our-team" class="section py-5" style="background-color: #FCFCFC;">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color: black;">我們的團隊</h2>
+        <div class="row justify-content-center" >
+            <div class="col-lg-10">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="images/shinbo.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">黃信博</h3>
+                        <p>指導老師</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="wei.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">陳世岷</h3>
+                        <p>組長</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="images/jiachun.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">余佳純</h3>
+                        <p>組員</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="wei.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">鄭郁樺</h3>
+                        <p>組員</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="wei.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">林永㛓</h3>
+                        <p>組員</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 team-member">
+                        <img src="wei.jpg" alt="團隊成員" class="img-fluid rounded-circle mb-3">
+                        <h3 style="color: black;">劉善維</h3>
+                        <p>組員</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>&copy; 2024 LipsPicks. All rights reserved.</p>
+    </div>
+</footer>
+    
+    <script src="/app.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startAnalysisBtn = document.getElementById('startAnalysisBtn');
+            const analysisModal = new bootstrap.Modal(document.getElementById('analysisModal'));
+            const initialOptions = document.getElementById('initialOptions');
+            const cameraView = document.getElementById('cameraView');
+            const previewView = document.getElementById('previewView');
+            const fileInput = document.getElementById('fileInput');
+            const cameraBtn = document.getElementById('cameraBtn');
+            const video = document.getElementById('video');
+            const captureBtn = document.getElementById('captureBtn');
+            const preview = document.getElementById('preview');
+            const retakeBtn = document.getElementById('retakeBtn');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+
+            let stream;
+
+            startAnalysisBtn.addEventListener('click', () => {
+                analysisModal.show();
+            });
+
+            cameraBtn.addEventListener('click', startCamera);
+            captureBtn.addEventListener('click', capturePhoto);
+            retakeBtn.addEventListener('click', () => {
+                previewView.style.display = 'none';
+                startCamera();
+            });
+
+            fileInput.addEventListener('change', handleFileUpload);
+
+            function startCamera() {
+                initialOptions.style.display = 'none';
+                cameraView.style.display = 'block';
+
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(str) {
+                        stream = str;
+                        video.srcObject = stream;
+                        video.play();
+                    })
+                    .catch(function(error) {
+                        console.error("無法訪問相機：", error);
+                        alert("無法訪問相機，請確保您已授予相機權限。");
+                    });
+            }
+
+            function capturePhoto() {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                
+                preview.src = canvas.toDataURL('image/jpeg');
+                
+                cameraView.style.display = 'none';
+                previewView.style.display = 'block';
+
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+            }
+
+            function handleFileUpload(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        initialOptions.style.display = 'none';
+                        previewView.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
+   
+</body>
+</html>
